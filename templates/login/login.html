@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <!-- Breadcrumb Start -->
+    <div class="breadcrumb-wrap">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Products</a></li>
+                <li class="breadcrumb-item active">Login & Register</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Login Start -->
+    <div class="login">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <form action="{% url 'login:register' %}" method="post">
+                        {% csrf_token %}
+                        <div class="register-form">
+                            <div class="row">
+                                {% for user_fields in UserForm %}
+                                    <div class="col-md-6">
+                                        {{ user_fields.label }}
+                                        {{ user_fields }}
+                                    </div>
+                                {% endfor %}
+                                <div class="col-md-12">
+                                    <button class="btn" value="submit" name="submit">Submit</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        {% if register_error_message %}
+                            <div class="alert alert-{{ error_message_type }}" role="alert">
+                                {{ register_error_message }}
+                            </div>
+                        {% endif %}
+                    </form>
+
+                </div>
+                <div class="col-lg-6">
+                    <form action="{% url 'login:login_user' %}" method="post">
+                        {% csrf_token %}
+                        <div class="login-form">
+                            <div class="row">
+                                {% for user_fields in UserLoginForm %}
+                                    <div class="col-md-6">
+                                        {{ user_fields.label }}
+                                        {{ user_fields }}
+                                    </div>
+                                {% endfor %}
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="remember_me" id="newaccount">
+                                        <label class="custom-control-label" for="newaccount">Keep me signed in</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="submit" class="btn" name="submit" value="submit">
+                                </div>
+
+                            </div>
+
+                        </div>
+                        {% if login_error_message %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ login_error_message }}
+                            </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login End -->
+{% endblock %}
+
